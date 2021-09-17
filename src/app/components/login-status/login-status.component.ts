@@ -16,7 +16,7 @@ export class LoginStatusComponent implements OnInit {
     async ngOnInit() {
         // returns an object with user's claims
         const userClaims = await this.oktaAuth.getUser();
-        console.log(userClaims)
+
         // user name is exposed directly as property
         this.userName = userClaims.name;
     }

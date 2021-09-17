@@ -26,7 +26,7 @@ export class PatientListsService {
     }
 
     deletePatientList(patientListId: number): Observable<any> {
-        return this.httpClient.delete(environment.apiUrl + '/patientLists/' + patientListId);
+        return this.httpClient.delete(environment.apiUrl + '/delete-patient-list/' + patientListId);
     }
 
     getPatientLists():
