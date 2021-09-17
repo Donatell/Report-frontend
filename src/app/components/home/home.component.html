@@ -1,0 +1,13 @@
+<mat-toolbar class="mat-elevation-z8 app-toolbar" color="primary">
+    <div>
+        <span>КВМ Отчёты</span>
+        <a mat-button routerLink="/reports/list-upload">
+            <mat-icon>file_upload</mat-icon>
+            Загрузить новый список</a>
+        <a mat-button routerLink="/reports/patient-lists">
+            <mat-icon>view_list</mat-icon>
+            Списки</a>
+    </div>
+    <app-login-status></app-login-status>
+</mat-toolbar>
+<router-outlet></router-outlet>

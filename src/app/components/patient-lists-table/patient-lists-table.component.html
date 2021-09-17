@@ -1,0 +1,103 @@
+<header>
+    <h2>Загруженные списки</h2>
+</header>
+<div class="container">
+    <mat-form-field>
+        <input #input (keyup)="applyFilter($event)" autocomplete="off" matInput placeholder="Поиск">
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+        <table [dataSource]="dataSource" mat-table matSort>
+            <ng-container matColumnDef="id">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Номер</th>
+                <td *matCellDef="let patientList" mat-cell>{{patientList.id}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="companyName">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Компания</th>
+                <td *matCellDef="let patientList" mat-cell>{{patientList.companyName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="patientQuantity">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Кол-во пациентов</th>
+                <td *matCellDef="let patientList" mat-cell>{{patientList.patientQuantity}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="creationDate">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Дата загрузки</th>
+                <td *matCellDef="let patientList" mat-cell>{{patientList.creationDate | date: 'dd.MM.yyyy HH:mm' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th *matHeaderCellDef mat-header-cell>Действие</th>
+                <td *matCellDef="let patientList" [ngSwitch]="patientList.processStepId" mat-cell>
+                    <span *ngSwitchCase="1">Список загружается</span>
+                    <a #a (mouseout)="a.color = 'accent'" (mouseover)="a.color = 'primary'" *ngSwitchCase="2"
+                       [routerLink]="['/reports/specify-gender', patientList.id]" color="accent" mat-raised-button>
+                        <mat-icon>person</mat-icon>
+                        Укажите пол</a>
+                    <a #a (mouseout)="a.color = 'accent'" (mouseover)="a.color = 'primary'" *ngSwitchCase="3"
+                       [routerLink]="['/reports/specify-prices', patientList.id]" color="accent" mat-raised-button>
+                        <mat-icon>request_quote</mat-icon>
+                        Укажите цены</a>
+                    <div *ngSwitchCase="4">
+                        <button [matMenuTriggerFor]="menu1" mat-raised-button>
+                            <mat-icon>file_download</mat-icon>
+                            Скачать отчёт
+                        </button>
+                        <mat-menu #menu1="matMenu">
+                            <button
+                                (click)="onDownloadClick(patientList.id, this.REPORT_TYPE.GENERAL, patientList.companyName)"
+                                mat-menu-item>
+                                Скачать
+                                общий
+                            </button>
+                            <button
+                                (click)="onDownloadClick(patientList.id, this.REPORT_TYPE.DETAILED, patientList.companyName)"
+                                mat-menu-item>
+                                Скачать поимённый
+                            </button>
+                            <button
+                                (click)="onDownloadClick(patientList.id, this.REPORT_TYPE.GENERAL_AND_DETAILED, patientList.companyName)"
+                                mat-menu-item>Скачать оба
+                            </button>
+                        </mat-menu>
+                        <button [matMenuTriggerFor]="menu2" mat-icon-button>
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu2="matMenu">
+                            <a [routerLink]="['/reports/specify-prices', patientList.id]" mat-button>
+                                <mat-icon>request_quote</mat-icon>
+                                Изменить цены</a>
+                        </mat-menu>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Delete List Row-->
+            <ng-container matColumnDef="delete">
+                <th *matHeaderCellDef mat-header-cell></th>
+                <td *matCellDef="let patientList" mat-cell>
+                    <button (click)="openDialog(patientList.id, patientList.companyName)" color="warn" mat-button>
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr *matNoDataRow class="mat-row">
+                <td *ngIf="input.value.length > 0; else noLists" class="mat-cell" colspan="5">Не найдены списки по
+                    запросу
+                    "{{input.value}}"
+                </td>
+                <ng-template #noLists>
+                    <td class="mat-cell" colspan="5">Нет загруженных списков</td>
+                </ng-template>
+            </tr>
+
+            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="выберите страницу"></mat-paginator>
+    </div>
+</div>

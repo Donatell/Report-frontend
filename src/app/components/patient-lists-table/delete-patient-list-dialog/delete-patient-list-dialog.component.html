@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Вы действительно хотите удалить список "{{data.companyName}}"?</h1>
+<div mat-dialog-content>Данные о списке и пациентах, а также файлы расчётов будут безвозвратно удалены из системы.</div>
+<div mat-dialog-actions>
+    <button autofocus mat-dialog-close mat-raised-button>Нет, не удалять</button>
+    <button (click)="onDelete(data.patientListId, data.companyName)" color="warn" mat-button mat-dialog-close
+            mat-raised-button>Да,
+        удалить список
+    </button>
+</div>

@@ -1,0 +1,25 @@
+<header>
+    <h2>Указание пола</h2>
+</header>
+<div class="container">
+    <h3>Необходимо выбрать пол, можно исправить ФИО</h3>
+    <div *ngFor="let patient of patients; let i = index" class="card">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>ФИО</mat-label>
+            <input #input (change)="onInputChange(input.value, patient.id)" [value]="patient.fullName" matInput
+                   placeholder="Введите ФИО">
+        </mat-form-field>
+        <mat-radio-group
+            (change)="onRadioSelect($event.value, patient.id)"
+            [id]="patient.id"
+            aria-labelledby="example-radio-group-label"
+            class="radio-group">
+            <mat-radio-button *ngFor="let genderId of genderIds" [value]="genderId" class="radio-button">
+                {{genderId == 1 ? 'Ж' : 'М'}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <button #btn (click)="onSubmit()" [disabled]="!(inputComplete && selectComplete)" color="primary" mat-raised-button>
+        Отправить
+    </button>
+</div>

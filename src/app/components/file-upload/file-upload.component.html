@@ -1,0 +1,70 @@
+<header>
+    <h2>Загрузка нового списка</h2>
+</header>
+<div class="container">
+    <mat-card class="form-card">
+        <mat-card-title>Данные о списке</mat-card-title>
+        <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm">
+            <mat-form-field>
+                <mat-label>Название компании</mat-label>
+                <input #companyName autocomplete="off" formControlName="companyNameControl" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <ngx-mat-file-input #file (change)="onChange(file)" [accept]="accept"
+                                    formControlName="fileControl"
+                                    placeholder="Выберите файл в формате .xlsx *">
+                    <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+                </ngx-mat-file-input>
+            </mat-form-field>
+
+            <button #btn [disabled]="(file.empty || submitted || !selectionComplete || companyName.value.length == 0)"
+                    color="primary"
+                    mat-raised-button>{{submitted ? "Загрузка" : "Загрузить"}}</button>
+            <p *ngIf="!selectionComplete && !file.empty" class="message">Выберите все столбцы</p>
+            <p *ngIf="file.empty" class="message">Выберите файл</p>
+            <p *ngIf="companyName.value.length == 0" class="message">Введите название компании
+                заказчика</p>
+
+        </form>
+    </mat-card>
+
+    <mat-card *ngIf="!file.empty" class="preview-card">
+        <!--        <mat-card-title>Предпросмотр таблицы</mat-card-title>-->
+        <table #table [dataSource]="dataSource" mat-table>
+
+            <ng-container *ngFor="let columnIndex of displayedColumns" [matColumnDef]="columnIndex">
+
+                <!-- render first column with delete buttons-->
+                <ng-template [ngIfElse]="otherColumns" [ngIf]="columnIndex == 'delete'">
+                    <th *matHeaderCellDef mat-header-cell></th>
+                    <td *matCellDef="let i = index" mat-cell>
+                        <button (click)="deleteRow(i); table.renderRows()" color="warn" mat-icon-button>
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </td>
+                </ng-template>
+
+
+                <ng-template #otherColumns>
+                    <th *matHeaderCellDef mat-header-cell>
+                        <mat-form-field appearance="standard" color="primary">
+                            <mat-label>Выберите столбец</mat-label>
+                            <mat-select (selectionChange)="onSelectionChange(columnIndex, $event.value)">
+                                <mat-option>Не выбрано</mat-option>
+                                <mat-option value="0">Не загружать</mat-option>
+                                <mat-option *ngFor="let columnTitle of columnTitles"
+                                            [value]="columnTitle.id"
+                                            disabled="{{selectedColumns.hasColumnTitleId(columnTitle.id)}}">{{columnTitle.title}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </th>
+                    <td *matCellDef="let person" mat-cell> {{person[columnIndex]}} </td>
+                </ng-template>
+            </ng-container>
+
+            <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+        </table>
+    </mat-card>
+</div>

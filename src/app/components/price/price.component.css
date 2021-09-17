@@ -1,0 +1,37 @@
+td, th {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 400px;
+    padding: 1rem;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding: 0 !important;
+    border-right-width: 1px;
+    border-right-color: rgba(0, 0, 0, .12);
+    border-right-style: solid;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    padding: 0 0.75rem !important;
+}
+
+.input {
+    max-width: 100px;
+    text-align: left;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.info-card {
+    height: fit-content;
+    margin-right: 1rem;
+    max-width: 25%;
+}
+
+.hint {
+    color: gray;
+}

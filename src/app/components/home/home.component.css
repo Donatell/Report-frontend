@@ -1,0 +1,13 @@
+.app-toolbar {
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1001; /* Ensure that your app's content doesn't overlap the toolbar */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.login {
+    font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}

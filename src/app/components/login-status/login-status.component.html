@@ -1,0 +1,15 @@
+<button [matMenuTriggerFor]="menu" mat-button>{{userName}}
+    <mat-icon>expand_more</mat-icon>
+</button>
+<mat-menu #menu="matMenu" xPosition="before">
+    <button (click)="logout()" mat-button>
+        <mat-icon>logout</mat-icon>
+        Выйти
+    </button>
+</mat-menu>
+
+<!--<button (click)="logout()" mat-button>-->
+<!--    <mat-icon>logout</mat-icon>-->
+<!--    Выйти-->
+<!--</button>-->
+

@@ -1,0 +1,51 @@
+<header>
+    <h2>Указание цен</h2>
+</header>
+<div class="container">
+    <mat-card class="info-card">
+        <mat-card-title>Данные о списке</mat-card-title>
+        <br>
+        <p>Заказчик: {{patientList?.companyName}}</p>
+        <p>Кол-во людей: {{patientList?.patientQuantity}}</p>
+        <br>
+        <p class="hint">Можно удалять лишние услуги</p>
+        <p class="hint">Нажмите на эту кнопку, когда заполните нужные цены</p>
+        <button (click)="onSubmit()" color="primary" mat-raised-button>Подтвердить цены</button>
+    </mat-card>
+    <table [dataSource]="priceDataArray" class="mat-elevation-z5" mat-table>
+        <!-- Delete Column -->
+        <ng-container matColumnDef="delete">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td #cell *matCellDef="let priceData" mat-cell>
+                <button (click)="deleteService(priceData.serviceId)" color="warn" mat-icon-button>
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <!-- Service Column -->
+        <ng-container matColumnDef="service">
+            <th *matHeaderCellDef mat-header-cell>Услуга</th>
+            <td *matCellDef="let priceData" mat-cell> {{priceData.serviceTitle}} </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <th *matHeaderCellDef mat-header-cell>Цена</th>
+            <td *matCellDef="let priceData" mat-cell>
+                <mat-form-field appearance="standard" class="input">
+                    <button (click)="input.value=''" *ngIf="input.value" aria-label="Clear" mat-icon-button
+                            matSuffix>
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <input #input (change)="changePrice(priceData.serviceId, input.value)" autocomplete="off"
+                           matInput
+                           placeholder="{{priceData.price}}" type="number">
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr #row *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+</div>
