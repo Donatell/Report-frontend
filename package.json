@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --ssl --ssl-key ./ssl/ssl.key --ssl-cert ./ssl/ssl.crt",
+        "start": "ng serve -o --ssl --ssl-key ./ssl/ssl.key --ssl-cert ./ssl/ssl.crt",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"

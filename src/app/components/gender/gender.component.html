@@ -19,7 +19,7 @@
             </mat-radio-button>
         </mat-radio-group>
     </div>
-    <button #btn (click)="onSubmit()" [disabled]="!(inputComplete && selectComplete)" color="primary" mat-raised-button>
+    <button (click)="onSubmit()" [disabled]="!(inputComplete && selectComplete)" color="primary" mat-raised-button>
         Отправить
     </button>
 </div>

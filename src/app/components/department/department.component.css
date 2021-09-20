@@ -1,0 +1,16 @@
+.card {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+    padding: 5px;
+    align-items: center;
+}
+
+.card p {
+    margin: 0 1rem;
+}
+
+.full-width {
+    min-width: 15rem;
+}

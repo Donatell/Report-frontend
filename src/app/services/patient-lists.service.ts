@@ -1,18 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {PatientList} from "../../common/patient-list";
+import {PatientList} from "../common/patient-list";
 import {map} from "rxjs/operators";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../environments/environment";
 
 interface GetResponse {
     _embedded: {
         patientLists: PatientList[]
     }
-}
-
-interface GetListResponse {
-
 }
 
 @Injectable({

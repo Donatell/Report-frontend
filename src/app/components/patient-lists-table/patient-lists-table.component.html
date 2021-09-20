@@ -27,6 +27,11 @@
                 <td *matCellDef="let patientList" mat-cell>{{patientList.creationDate | date: 'dd.MM.yyyy HH:mm' }}</td>
             </ng-container>
 
+            <ng-container matColumnDef="module">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Модуль</th>
+                <td *matCellDef="let patientList" mat-cell>{{patientList.moduleId.description }}</td>
+            </ng-container>
+
             <ng-container matColumnDef="action">
                 <th *matHeaderCellDef mat-header-cell>Действие</th>
                 <td *matCellDef="let patientList" [ngSwitch]="patientList.processStepId" mat-cell>
@@ -39,6 +44,10 @@
                        [routerLink]="['/reports/specify-prices', patientList.id]" color="accent" mat-raised-button>
                         <mat-icon>request_quote</mat-icon>
                         Укажите цены</a>
+                    <a #a (mouseout)="a.color = 'accent'" (mouseover)="a.color = 'primary'" *ngSwitchCase="5"
+                       [routerLink]="['/reports/specify-department', patientList.id]" color="accent" mat-raised-button>
+                        <mat-icon>apartment</mat-icon>
+                        Укажите подразделение</a>
                     <div *ngSwitchCase="4">
                         <button [matMenuTriggerFor]="menu1" mat-raised-button>
                             <mat-icon>file_download</mat-icon>
@@ -47,6 +56,7 @@
                         <mat-menu #menu1="matMenu">
                             <button
                                 (click)="onDownloadClick(patientList.id, this.REPORT_TYPE.GENERAL, patientList.companyName)"
+                                *ngIf="patientList.moduleId.id != 2"
                                 mat-menu-item>
                                 Скачать
                                 общий
@@ -58,6 +68,7 @@
                             </button>
                             <button
                                 (click)="onDownloadClick(patientList.id, this.REPORT_TYPE.GENERAL_AND_DETAILED, patientList.companyName)"
+                                *ngIf="patientList.moduleId.id != 2"
                                 mat-menu-item>Скачать оба
                             </button>
                         </mat-menu>
@@ -65,7 +76,8 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu2="matMenu">
-                            <a [routerLink]="['/reports/specify-prices', patientList.id]" mat-button>
+                            <a *ngIf="patientList.moduleId.id != 2"
+                               [routerLink]="['/reports/specify-prices', patientList.id]" mat-button>
                                 <mat-icon>request_quote</mat-icon>
                                 Изменить цены</a>
                         </mat-menu>

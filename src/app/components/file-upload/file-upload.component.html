@@ -3,24 +3,34 @@
 </header>
 <div class="container">
     <mat-card class="form-card">
+
         <mat-card-title>Данные о списке</mat-card-title>
         <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm">
             <mat-form-field>
-                <mat-label>Название компании</mat-label>
+                <mat-label>1. Введите название компании</mat-label>
                 <input #companyName autocomplete="off" formControlName="companyNameControl" matInput required>
             </mat-form-field>
 
             <mat-form-field>
-                <ngx-mat-file-input #file (change)="onChange(file)" [accept]="accept"
+                <mat-select (selectionChange)="onModuleSelectionChange()" formControlName="moduleControl"
+                            placeholder="2. Выберите модуль">
+                    <mat-option *ngFor="let module of modules" [value]="module.id">{{module.description}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="{{this.moduleControl?.valid ? '' : 'hidden'}}">
+                <ngx-mat-file-input #file (change)="onFileChange(file)" [accept]="accept"
                                     formControlName="fileControl"
-                                    placeholder="Выберите файл в формате .xlsx *">
+                                    placeholder="3. Выберите файл в формате .xlsx *">
                     <mat-icon ngxMatFileInputIcon>folder</mat-icon>
                 </ngx-mat-file-input>
             </mat-form-field>
 
-            <button #btn [disabled]="(file.empty || submitted || !selectionComplete || companyName.value.length == 0)"
-                    color="primary"
-                    mat-raised-button>{{submitted ? "Загрузка" : "Загрузить"}}</button>
+            <button
+                [disabled]="(file.empty || submitted || !selectionComplete || companyName.value.length == 0)"
+                color="primary"
+                mat-raised-button>{{submitted ? "Загрузка" : "Загрузить"}}</button>
+
             <p *ngIf="!selectionComplete && !file.empty" class="message">Выберите все столбцы</p>
             <p *ngIf="file.empty" class="message">Выберите файл</p>
             <p *ngIf="companyName.value.length == 0" class="message">Введите название компании
@@ -30,7 +40,7 @@
     </mat-card>
 
     <mat-card *ngIf="!file.empty" class="preview-card">
-        <!--        <mat-card-title>Предпросмотр таблицы</mat-card-title>-->
+        <!-- <mat-card-title>Предпросмотр таблицы</mat-card-title> -->
         <table #table [dataSource]="dataSource" mat-table>
 
             <ng-container *ngFor="let columnIndex of displayedColumns" [matColumnDef]="columnIndex">

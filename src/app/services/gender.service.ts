@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Patient} from "../../common/patient";
-import {PatientGenderData} from "../gender/gender.component";
-import {environment} from "../../../environments/environment";
+import {Patient} from "../common/patient";
+import {PatientGenderData} from "../components/gender/gender.component";
+import {environment} from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'

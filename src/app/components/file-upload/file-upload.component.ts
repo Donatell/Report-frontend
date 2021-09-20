@@ -1,14 +1,18 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {FileUploadService} from "../services/file-upload.service";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FileUploadService} from "../../services/file-upload.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgxMatFileInputComponent} from "@angular-material-components/file-input";
 import * as XLSX from 'xlsx';
 import {ColumnTitle} from "../../common/column-title";
-import {ColumnTitleService} from "../services/column-title.service";
+import {ColumnTitleService} from "../../services/column-title.service";
 import {Patient} from "../../common/patient";
-import {SpinnerOverlayService} from "../services/spinner-overlay.service";
+import {SpinnerOverlayService} from "../../services/spinner-overlay.service";
+import {Module} from "../../common/module";
+import {ModuleService} from "../../services/module.service";
+import {TransneftBase} from "../../common/transneft-base";
+import {TransneftBaseService} from "../../services/transneft-base.service";
 
 export class SelectedColumn {
     columnIndex: number;
@@ -55,33 +59,44 @@ export class SelectedColumns {
     styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent implements OnInit, AfterViewInit {
+    // left form
+    uploadForm: FormGroup;
+    file: any;
     accept: string = '.xlsx';
     required: Boolean = true;
-    file: any;
-    uploadForm: FormGroup;
     submitted: boolean = false;
+    modules: Module[] = [];
+    moduleControl: AbstractControl | null;
+
+    // table data
     selectionComplete: boolean = false;
     dataSource: any[];
     displayedColumns: string[] = [];
     selectedColumns: SelectedColumns = new SelectedColumns([]);
     columnOrder: string[] = [];
-
-    // Column titles match
     columnTitles: ColumnTitle[];
+
+    // extra modular data
+    transneftBases: TransneftBase[] = [];
+
 
     constructor(private formBuilder: FormBuilder,
                 private fileUploadService: FileUploadService,
                 private columnTitleService: ColumnTitleService,
                 private router: Router,
                 private _snackBar: MatSnackBar,
-                private spinnerOverlayService: SpinnerOverlayService) {
+                private spinnerOverlayService: SpinnerOverlayService,
+                private moduleService: ModuleService,
+                private transneftBaseService: TransneftBaseService) {
         this.uploadForm = new FormGroup(
             {
                 companyNameControl: new FormControl('', [Validators.required]),
-                fileControl: new FormControl(this.file, [Validators.required])
+                fileControl: new FormControl(this.file, [Validators.required]),
+                moduleControl: new FormControl('', [Validators.required])
             });
         this.columnTitles = [];
         this.dataSource = [];
+        this.moduleControl = this.uploadForm.get('moduleControl');
     }
 
     onSelectionChange(columnIndex: string, titleId: number | string) {
@@ -93,17 +108,42 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
         this.selectionComplete = !this.selectedColumns.hasColumnTitleId(-1);
     }
 
-    ngAfterViewInit(): void {
+    onModuleSelectionChange() {
+        this.spinnerOverlayService.show();
         this.columnTitleService.getColumnTitles().subscribe(data => {
             this.columnTitles = data;
+
+            // filter out unnecessary Transneft base column title if common module selected
+            if (this.moduleControl?.value == 1) {
+                this.columnTitles = this.columnTitles.filter(columnTitle => columnTitle.id != 6);
+                this.spinnerOverlayService.hide();
+            } else if (this.moduleControl?.value == 2) {
+                this.transneftBaseService.getTransneftBases().subscribe(data => {
+                    this.transneftBases = data
+                    this.spinnerOverlayService.hide();
+                });
+            } else {
+                this.spinnerOverlayService.hide();
+
+            }
         });
+
+
+    }
+
+    ngAfterViewInit(): void {
+        this.spinnerOverlayService.show();
+        this.moduleService.getModules().subscribe(data => {
+            this.modules = data;
+            this.spinnerOverlayService.hide();
+        })
+
     }
 
     ngOnInit(): void {
-
     }
 
-    onChange(fileControl: NgxMatFileInputComponent) {
+    onFileChange(fileControl: NgxMatFileInputComponent) {
         this.spinnerOverlayService.show();
 
         // clear columns, their quantity is dynamic
@@ -236,19 +276,31 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
             if (header[0].includes("department")) {
                 tempPatient.department = patient.department;
             }
+            if (header[0].includes("transneftBase") && patient.transneftBase != null) {
+                const transneftBase = this.transneftBases.find(value => {
+                    return patient.transneftBase.trim().toLowerCase().includes(value.title.toLowerCase())
+                });
+                if (typeof transneftBase != "undefined") {
+                    // @ts-ignore
+                    delete transneftBase._links
+                    tempPatient.transneftBase = transneftBase;
+                }
+            }
             patientList.push(tempPatient);
         }
+
+        console.log(patientList);
 
         this.fileUploadService.upload(this.uploadForm, patientList).subscribe(
             (response) => {
                 this.spinnerOverlayService.hide();
                 this.router.navigate(["/reports/patient-lists"]);
-                this._snackBar.open(response.message, "ОК")
+                this._snackBar.open(response.message, "ОК");
             },
             (error) => {
                 this.spinnerOverlayService.hide();
                 this.router.navigate(["/reports/patient-lists"]);
-                this._snackBar.open(error.error.error.message, "ОК")
+                this._snackBar.open(error.error.error.message, "ОК");
             }
         );
     }

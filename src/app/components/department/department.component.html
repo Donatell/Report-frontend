@@ -1,0 +1,28 @@
+<header>
+    <h2>Указание подразделения</h2>
+</header>
+<div class="container">
+    <h3>Необходимо выбрать пол, можно исправить ФИО</h3>
+    <mat-card *ngFor="let categoryDatum of categoryData; let i = index" class="card">
+        <p>{{categoryDatum.fullName}}</p>
+        <mat-form-field appearance="outline">
+            <mat-label>Выберите РНУ</mat-label>
+            <mat-select #select (selectionChange)="onTransneftBaseChange($event.value, i)"
+                        placeholder="Выберите РНУ">
+                <mat-option *ngFor="let transneftBase of transneftBases"
+                            [value]="transneftBase.id">{{transneftBase.title}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field [ngStyle]="{display: select.value ? 'block' : 'none'}" appearance="outline" class="full-width">
+            <mat-label>Выберите ценовую категорию</mat-label>
+            <mat-select (selectionChange)="onTransneftPriceCategoryChange($event.value, i)"
+                        placeholder="Выберите ценовую категорию">
+                <mat-option *ngFor="let priceCategory of transneftPriceCategories[select.value - 1]"
+                            [value]="priceCategory.id">{{priceCategory.description}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-card>
+    <button (click)="onSubmit()" [disabled]="!selectionComplete" color="primary" mat-raised-button>
+        Отправить
+    </button>
+</div>

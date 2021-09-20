@@ -1,13 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {PatientListsService} from "../services/patient-lists.service";
+import {PatientListsService} from "../../services/patient-lists.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {PatientList, PatientListData} from "../../common/patient-list";
-import {FileDownloadService, REPORT_TYPE} from "../services/file-download.service";
-import {SpinnerOverlayService} from "../services/spinner-overlay.service";
+import {FileDownloadService, REPORT_TYPE} from "../../services/file-download.service";
+import {SpinnerOverlayService} from "../../services/spinner-overlay.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DeletePatientListDialogComponent} from "./delete-patient-list-dialog/delete-patient-list-dialog.component";
+import {Module} from "../../common/module";
+import {ModuleService} from "../../services/module.service";
 
 @Component({
     selector: 'app-patient-lists-table',
@@ -15,7 +17,7 @@ import {DeletePatientListDialogComponent} from "./delete-patient-list-dialog/del
     styleUrls: ['./patient-lists-table.component.css']
 })
 export class PatientListsTableComponent implements AfterViewInit, OnInit {
-    displayedColumns: string[] = ["id", "companyName", "patientQuantity", "creationDate", "action", "delete"]
+    displayedColumns: string[] = ["id", "companyName", "patientQuantity", "creationDate", "module", "action", "delete"]
     dataSource: MatTableDataSource<PatientListData>;
     // @ts-ignore
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -23,12 +25,14 @@ export class PatientListsTableComponent implements AfterViewInit, OnInit {
     @ViewChild(MatSort) sort: MatSort;
     patientLists: PatientList[] = [];
     REPORT_TYPE = REPORT_TYPE;
+    modules: Module[] = [];
 
     constructor(private patientListsService: PatientListsService,
                 private fileDownloadService: FileDownloadService,
                 private spinnerOverlayService: SpinnerOverlayService,
+                private moduleService: ModuleService,
                 public dialog: MatDialog) {
-        this.dataSource = new MatTableDataSource<PatientListData>()
+        this.dataSource = new MatTableDataSource<PatientListData>();
     }
 
     ngOnInit(): void {
@@ -62,15 +66,31 @@ export class PatientListsTableComponent implements AfterViewInit, OnInit {
     }
 
     private listPatientLists() {
-        this.patientListsService.getPatientLists().subscribe(data => {
-            this.patientLists = data
-            this.dataSource = new MatTableDataSource<PatientListData>(this.patientLists)
-            this.dataSource.paginator = this.paginator;
-            this.paginator._intl.itemsPerPageLabel = 'Списков на странице';
-            this.paginator._intl.nextPageLabel = 'Следующая страница';
-            this.paginator._intl.previousPageLabel = 'Предыдущая страница';
-            this.dataSource.sort = this.sort;
-            this.spinnerOverlayService.hide();
+        this.moduleService.getModules().subscribe(data => {
+            this.modules = data;
+
+            this.patientListsService.getPatientLists().subscribe(data => {
+                this.patientLists = data;
+
+                for (let patientList of this.patientLists) {
+                    for (let module of this.modules) {
+                        if (patientList.moduleId == module.id) {
+                            patientList.moduleId = module;
+                        }
+                    }
+                }
+
+                this.dataSource = new MatTableDataSource<PatientListData>(this.patientLists)
+                this.dataSource.paginator = this.paginator;
+                this.paginator._intl.itemsPerPageLabel = 'Списков на странице';
+                this.paginator._intl.nextPageLabel = 'Следующая страница';
+                this.paginator._intl.previousPageLabel = 'Предыдущая страница';
+                this.dataSource.sort = this.sort;
+
+                this.spinnerOverlayService.hide();
+            })
         })
+
+
     }
 }

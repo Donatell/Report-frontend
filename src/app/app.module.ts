@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {FileUploadComponent} from './components/file-upload/file-upload.component';
 import {PatientListsTableComponent} from './components/patient-lists-table/patient-lists-table.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {PatientListsService} from "./components/services/patient-lists.service";
+import {PatientListsService} from "./services/patient-lists.service";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatTableModule} from "@angular/material/table";
@@ -39,6 +39,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {LoginComponent} from './components/login/login.component';
 import {DeletePatientListDialogComponent} from './components/patient-lists-table/delete-patient-list-dialog/delete-patient-list-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {DepartmentComponent} from './components/department/department.component';
 
 const CALLBACK_PATH = 'login/callback'
 
@@ -69,6 +70,7 @@ const routes: Routes = [
         children: [
             {path: 'specify-gender/:patientListId', component: GenderComponent},
             {path: 'specify-prices/:patientListId', component: PriceComponent},
+            {path: 'specify-department/:patientListId', component: DepartmentComponent},
             {path: 'patient-lists', component: PatientListsTableComponent},
             {path: 'list-upload', component: FileUploadComponent},
             {path: '', redirectTo: '/patient-lists', pathMatch: 'full'}
@@ -89,7 +91,8 @@ const routes: Routes = [
         HomeComponent,
         LoginStatusComponent,
         LoginComponent,
-        DeletePatientListDialogComponent
+        DeletePatientListDialogComponent,
+        DepartmentComponent
     ],
     imports: [
         BrowserModule,
