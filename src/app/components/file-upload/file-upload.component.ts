@@ -164,9 +164,12 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
             let rowAoA: any[][] = [[]];
             let cell;
             while ((cell = sheet[XLSX.utils.encode_cell({c: C, r: 0})]) != null) {
-                rowAoA[0][C] = cell.h;
+                rowAoA[0][C] = cell;
                 C++;
             }
+
+            console.log(sheet);
+            console.log(rowAoA);
 
             // insert first row in the end
             XLSX.utils.sheet_add_aoa(sheet, rowAoA, {
@@ -183,6 +186,8 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
                     maxRowLength = currentLength;
                 }
             }
+
+            console.log(jsonArray);
 
             // insert custom header using max row length, define displayed columns
             this.displayedColumns.push("delete")
