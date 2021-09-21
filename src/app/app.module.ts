@@ -2,10 +2,10 @@ import {Injector, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {FileUploadComponent} from './components/file-upload/file-upload.component';
-import {PatientListsTableComponent} from './components/patient-lists-table/patient-lists-table.component';
+import {FileUploadComponent} from './components/reports-module/file-upload/file-upload.component';
+import {PatientListsTableComponent} from './components/reports-module/patient-lists-table/patient-lists-table.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {PatientListsService} from "./services/patient-lists.service";
+import {PatientListsService} from "./services/reports-module/patient-lists.service";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatTableModule} from "@angular/material/table";
@@ -24,22 +24,22 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {NgxMatFileInputModule} from "@angular-material-components/file-input";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatMenuModule} from "@angular/material/menu";
-import {PriceComponent} from './components/price/price.component';
-import {GenderComponent} from './components/gender/gender.component';
+import {PriceComponent} from './components/reports-module/price/price.component';
+import {GenderComponent} from './components/reports-module/gender/gender.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {SpinnerOverlayComponent} from './components/spinner-overlay/spinner-overlay.component';
-import {HomeComponent} from './components/home/home.component';
+import {SpinnerOverlayComponent} from './components/common/spinner-overlay/spinner-overlay.component';
+import {ReportsComponent} from './components/reports-module/reports/reports.component';
 import {OKTA_CONFIG, OktaAuthGuard, OktaAuthModule, OktaAuthService, OktaCallbackComponent} from "@okta/okta-angular";
 import {environment} from "../environments/environment";
-import {LoginStatusComponent} from './components/login-status/login-status.component';
+import {LoginStatusComponent} from './components/common/login-status/login-status.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
-import {LoginComponent} from './components/login/login.component';
-import {DeletePatientListDialogComponent} from './components/patient-lists-table/delete-patient-list-dialog/delete-patient-list-dialog.component';
+import {LoginComponent} from './components/common/login/login.component';
+import {DeletePatientListDialogComponent} from './components/reports-module/patient-lists-table/delete-patient-list-dialog/delete-patient-list-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import {DepartmentComponent} from './components/department/department.component';
+import {DepartmentComponent} from './components/reports-module/department/department.component';
 
 const CALLBACK_PATH = 'login/callback'
 
@@ -63,7 +63,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {
         path: 'reports',
-        component: HomeComponent,
+        component: ReportsComponent,
         canActivate: [OktaAuthGuard],
         canActivateChild: [OktaAuthGuard],
         data: {onAuthRequired},
@@ -88,7 +88,7 @@ const routes: Routes = [
         PriceComponent,
         GenderComponent,
         SpinnerOverlayComponent,
-        HomeComponent,
+        ReportsComponent,
         LoginStatusComponent,
         LoginComponent,
         DeletePatientListDialogComponent,

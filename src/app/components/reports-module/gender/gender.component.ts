@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {GenderService} from "../../services/gender.service";
+import {GenderService} from "../../../services/reports-module/gender.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Patient} from "../../common/patient";
+import {Patient} from "../../../entities/reports-module/patient";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {SpinnerOverlayService} from "../../services/spinner-overlay.service";
+import {SpinnerOverlayService} from "../../../services/common/spinner-overlay.service";
 
 
 export class PatientGenderData {

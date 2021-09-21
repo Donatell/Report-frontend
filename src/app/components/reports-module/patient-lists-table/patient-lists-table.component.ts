@@ -1,15 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {PatientListsService} from "../../services/patient-lists.service";
+import {PatientListsService} from "../../../services/reports-module/patient-lists.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {PatientList, PatientListData} from "../../common/patient-list";
-import {FileDownloadService, REPORT_TYPE} from "../../services/file-download.service";
-import {SpinnerOverlayService} from "../../services/spinner-overlay.service";
+import {PatientList, PatientListData} from "../../../entities/reports-module/patient-list";
+import {FileDownloadService, REPORT_TYPE} from "../../../services/reports-module/file-download.service";
+import {SpinnerOverlayService} from "../../../services/common/spinner-overlay.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DeletePatientListDialogComponent} from "./delete-patient-list-dialog/delete-patient-list-dialog.component";
-import {Module} from "../../common/module";
-import {ModuleService} from "../../services/module.service";
+import {Module} from "../../../entities/reports-module/module";
+import {ModuleService} from "../../../services/reports-module/module.service";
 
 @Component({
     selector: 'app-patient-lists-table',

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {PatientListsService} from "../../../services/patient-lists.service";
-import {SpinnerOverlayService} from "../../../services/spinner-overlay.service";
+import {PatientListsService} from "../../../../services/reports-module/patient-lists.service";
+import {SpinnerOverlayService} from "../../../../services/common/spinner-overlay.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface DialogData {

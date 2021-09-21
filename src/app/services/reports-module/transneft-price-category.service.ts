@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {TransneftPriceCategory} from "../common/transneft-price-category";
+import {TransneftPriceCategory} from "../../entities/reports-module/transneft-price-category";
 
 @Injectable({
     providedIn: 'root'

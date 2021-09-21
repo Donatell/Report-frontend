@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Module} from "../common/module";
+import {Module} from "../../entities/reports-module/module";
 import {map} from "rxjs/operators";
 
 interface GetResponse {

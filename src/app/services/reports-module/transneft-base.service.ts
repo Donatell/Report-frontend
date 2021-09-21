@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {TransneftBase} from "../common/transneft-base";
+import {TransneftBase} from "../../entities/reports-module/transneft-base";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 

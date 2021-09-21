@@ -4,7 +4,7 @@ import {NavigationStart, Router} from "@angular/router";
 //@ts-ignore
 import * as OktaSignIn from '@okta/okta-signin-widget';
 import {Tokens} from '@okta/okta-auth-js';
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-login',

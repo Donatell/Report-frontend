@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import * as FileSaver from "file-saver";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 
 export enum REPORT_TYPE {
     GENERAL_AND_DETAILED,

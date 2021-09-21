@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {ColumnTitle} from "../common/column-title";
-import {environment} from "../../environments/environment";
+import {ColumnTitle} from "../../entities/reports-module/column-title";
+import {environment} from "../../../environments/environment";
 
 interface GetResponse {
     _embedded: {

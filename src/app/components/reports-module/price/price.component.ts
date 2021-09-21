@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {PriceService} from "../../services/price.service";
-import {PatientListsService} from "../../services/patient-lists.service";
-import {PatientList} from "../../common/patient-list";
+import {PriceService} from "../../../services/reports-module/price.service";
+import {PatientListsService} from "../../../services/reports-module/patient-lists.service";
+import {PatientList} from "../../../entities/reports-module/patient-list";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {SpinnerOverlayService} from "../../services/spinner-overlay.service";
+import {SpinnerOverlayService} from "../../../services/common/spinner-overlay.service";
 
 export class PriceData {
     serviceId: number;

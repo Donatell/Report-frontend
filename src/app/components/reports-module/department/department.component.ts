@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {SpecifyDepartmentService} from "../../services/specify-department.service";
-import {SpinnerOverlayService} from "../../services/spinner-overlay.service";
+import {SpecifyDepartmentService} from "../../../services/reports-module/specify-department.service";
+import {SpinnerOverlayService} from "../../../services/common/spinner-overlay.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {TransneftBaseService} from "../../services/transneft-base.service";
-import {TransneftBase} from "../../common/transneft-base";
-import {TransneftPriceCategoryService} from "../../services/transneft-price-category.service";
-import {TransneftPriceCategory} from "../../common/transneft-price-category";
-import {TransneftCategoryData} from "../../common/transneft-category-data";
+import {TransneftBaseService} from "../../../services/reports-module/transneft-base.service";
+import {TransneftBase} from "../../../entities/reports-module/transneft-base";
+import {TransneftPriceCategoryService} from "../../../services/reports-module/transneft-price-category.service";
+import {TransneftPriceCategory} from "../../../entities/reports-module/transneft-price-category";
+import {TransneftCategoryData} from "../../../entities/reports-module/transneft-category-data";
 
 @Component({
     selector: 'app-specify-department',

@@ -1,18 +1,18 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {FileUploadService} from "../../services/file-upload.service";
+import {FileUploadService} from "../../../services/reports-module/file-upload.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {NgxMatFileInputComponent} from "@angular-material-components/file-input";
 import * as XLSX from 'xlsx';
-import {ColumnTitle} from "../../common/column-title";
-import {ColumnTitleService} from "../../services/column-title.service";
-import {Patient} from "../../common/patient";
-import {SpinnerOverlayService} from "../../services/spinner-overlay.service";
-import {Module} from "../../common/module";
-import {ModuleService} from "../../services/module.service";
-import {TransneftBase} from "../../common/transneft-base";
-import {TransneftBaseService} from "../../services/transneft-base.service";
+import {ColumnTitle} from "../../../entities/reports-module/column-title";
+import {ColumnTitleService} from "../../../services/reports-module/column-title.service";
+import {Patient} from "../../../entities/reports-module/patient";
+import {SpinnerOverlayService} from "../../../services/common/spinner-overlay.service";
+import {Module} from "../../../entities/reports-module/module";
+import {ModuleService} from "../../../services/reports-module/module.service";
+import {TransneftBase} from "../../../entities/reports-module/transneft-base";
+import {TransneftBaseService} from "../../../services/reports-module/transneft-base.service";
 
 export class SelectedColumn {
     columnIndex: number;
