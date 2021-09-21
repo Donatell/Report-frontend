@@ -10,6 +10,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {DeletePatientListDialogComponent} from "./delete-patient-list-dialog/delete-patient-list-dialog.component";
 import {Module} from "../../../entities/reports-module/module";
 import {ModuleService} from "../../../services/reports-module/module.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-patient-lists-table',
@@ -31,7 +33,9 @@ export class PatientListsTableComponent implements AfterViewInit, OnInit {
                 private fileDownloadService: FileDownloadService,
                 private spinnerOverlayService: SpinnerOverlayService,
                 private moduleService: ModuleService,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                private _snackBar: MatSnackBar,
+                private router: Router) {
         this.dataSource = new MatTableDataSource<PatientListData>();
     }
 
@@ -88,7 +92,15 @@ export class PatientListsTableComponent implements AfterViewInit, OnInit {
                 this.dataSource.sort = this.sort;
 
                 this.spinnerOverlayService.hide();
+            }, error => {
+                this.spinnerOverlayService.hide();
+                this.router.navigate(["/reports/patient-lists"]);
+                this._snackBar.open(error.error, "ОК");
             })
+        }, error => {
+            this.spinnerOverlayService.hide();
+            this.router.navigate(["/reports/patient-lists"]);
+            this._snackBar.open(error.error, "ОК");
         })
 
 

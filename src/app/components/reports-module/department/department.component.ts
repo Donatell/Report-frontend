@@ -55,8 +55,20 @@ export class DepartmentComponent implements OnInit, AfterViewInit {
                     }
                     this.spinnerOverlayService.hide();
                     console.log(this.categoryData);
+                }, error => {
+                    this.spinnerOverlayService.hide();
+                    this.router.navigate(["/reports/patient-lists"]);
+                    this._snackBar.open(error.error, "ОК");
                 });
+            }, error => {
+                this.spinnerOverlayService.hide();
+                this.router.navigate(["/reports/patient-lists"]);
+                this._snackBar.open(error.error, "ОК");
             })
+        }, error => {
+            this.spinnerOverlayService.hide();
+            this.router.navigate(["/reports/patient-lists"]);
+            this._snackBar.open(error.error, "ОК");
         })
     }
 

@@ -17,7 +17,8 @@
         <ng-container matColumnDef="delete">
             <th *matHeaderCellDef mat-header-cell></th>
             <td #cell *matCellDef="let priceData" mat-cell>
-                <button (click)="deleteService(priceData.serviceId)" color="warn" mat-icon-button>
+                <button (click)="deleteService(priceData.serviceId)" color="warn" mat-icon-button
+                        matTooltip="Удалить услугу">
                     <mat-icon>clear</mat-icon>
                 </button>
             </td>

@@ -35,7 +35,7 @@ export class DeletePatientListDialogComponent implements OnInit {
             this._snackBar.open(`Список "${companyName}" удалён`);
         }, error => {
             this.spinnerOverlayService.hide();
-            this._snackBar.open(`Не удалось удалить список "${companyName}"`);
+            this._snackBar.open(`Не удалось удалить список "${companyName}": ${error.error}`);
         });
     }
 }

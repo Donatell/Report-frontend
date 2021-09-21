@@ -78,7 +78,7 @@ export class GenderComponent implements OnInit, AfterViewInit {
             (error) => {
                 this.spinnerOverlayService.hide();
                 this.router.navigate(["/reports/patient-lists"]);
-                this._snackBar.open(error.error.error.message, "ОК");
+                this._snackBar.open(error.error, "ОК");
             }
         );
     }
@@ -95,6 +95,11 @@ export class GenderComponent implements OnInit, AfterViewInit {
                 this.patientGenderDataArray.push(new PatientGenderData(patient.id, patient.fullName, 0))
             }
             this.spinnerOverlayService.hide();
+        }, error => {
+            this.spinnerOverlayService.hide();
+            console.log(error);
+            this.router.navigate(["/reports/patient-lists"]);
+            this._snackBar.open(error.error, "ОК");
         });
     }
 

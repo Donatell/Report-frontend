@@ -121,11 +121,18 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
                 this.transneftBaseService.getTransneftBases().subscribe(data => {
                     this.transneftBases = data
                     this.spinnerOverlayService.hide();
+                }, error => {
+                    this.spinnerOverlayService.hide();
+                    this.router.navigate(["/reports/patient-lists"]);
+                    this._snackBar.open(error.error, "ОК");
                 });
             } else {
                 this.spinnerOverlayService.hide();
-
             }
+        }, error => {
+            this.spinnerOverlayService.hide();
+            this.router.navigate(["/reports/patient-lists"]);
+            this._snackBar.open(error.error, "ОК");
         });
 
 
@@ -136,6 +143,10 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
         this.moduleService.getModules().subscribe(data => {
             this.modules = data;
             this.spinnerOverlayService.hide();
+        }, error => {
+            this.spinnerOverlayService.hide();
+            this.router.navigate(["/reports/patient-lists"]);
+            this._snackBar.open(error.error, "ОК");
         })
 
     }
@@ -305,7 +316,7 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
             (error) => {
                 this.spinnerOverlayService.hide();
                 this.router.navigate(["/reports/patient-lists"]);
-                this._snackBar.open(error.error.error.message, "ОК");
+                this._snackBar.open(error.error, "ОК");
             }
         );
     }

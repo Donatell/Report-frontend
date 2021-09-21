@@ -28,7 +28,7 @@
             </ng-container>
 
             <ng-container matColumnDef="module">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Модуль</th>
+                <th *matHeaderCellDef mat-header-cell>Модуль</th>
                 <td *matCellDef="let patientList" mat-cell>{{patientList.moduleId.description }}</td>
             </ng-container>
 
@@ -89,7 +89,8 @@
             <ng-container matColumnDef="delete">
                 <th *matHeaderCellDef mat-header-cell></th>
                 <td *matCellDef="let patientList" mat-cell>
-                    <button (click)="openDialog(patientList.id, patientList.companyName)" color="warn" mat-button>
+                    <button (click)="openDialog(patientList.id, patientList.companyName)" color="warn"
+                            mat-button matTooltip="Удалить список">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </td>

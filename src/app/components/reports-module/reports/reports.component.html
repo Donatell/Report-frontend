@@ -1,6 +1,8 @@
 <mat-toolbar class="mat-elevation-z8 app-toolbar" color="primary">
     <div>
-        <span>КВМ Отчёты</span>
+        <a mat-raised-button matTooltip="К выбору модуля" routerLink="/module-selection">
+            <mat-icon>arrow_back</mat-icon>
+        </a>
         <a mat-button routerLink="/reports/list-upload">
             <mat-icon>file_upload</mat-icon>
             Загрузить новый список</a>

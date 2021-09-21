@@ -48,10 +48,18 @@ export class PriceComponent implements OnInit, AfterViewInit {
         this.priceService.getPricesFor(this.patientListId).subscribe(data => {
             this.priceDataArray = data;
             this.spinnerOverlayService.hide();
+        }, error => {
+            this.spinnerOverlayService.hide();
+            this.router.navigate(["/reports/patient-lists"]);
+            this._snackBar.open(error.error, "ОК");
         });
 
         this.patientListsService.getPatientList(this.patientListId).subscribe(data => {
             this.patientList = data;
+        }, error => {
+            this.spinnerOverlayService.hide();
+            this.router.navigate(["/reports/patient-lists"]);
+            this._snackBar.open(error.error, "ОК");
         });
     }
 
@@ -70,7 +78,7 @@ export class PriceComponent implements OnInit, AfterViewInit {
             (error) => {
                 this.spinnerOverlayService.hide();
                 this.router.navigate(["/reports/patient-lists"]);
-                this._snackBar.open(error.error.error.message, "ОК")
+                this._snackBar.open(error.error, "ОК")
             });
     }
 
