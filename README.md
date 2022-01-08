@@ -1,7 +1,7 @@
 # Clinical reporting application (frontend part)
 [Deutsch](./README_DE.md)
 
-* TOC {:toc}
+See the description of the backend part here: [Link](https://github.com/Donatell/report-backend)
 
 ## Description and area of application
 This project has been developed for a Russian clinic in order to automate the process of creating reports for medical examinations of enterprises (B2B).
@@ -19,4 +19,5 @@ The application of this program allowed to prepare reporting documents 6 times f
 5. specify the gender, if it was not possible to set it by name
 6. Download reports
 
-## Technical description
+## Technical description of the frontend part
+I have decided to use **Angular** as an application design framework to create a single-page app with **Angular Material UI** components to achieve high quality while maintaining faster developement. Further anvantage of Angular is **TypeScript** as it enables tighter integration with my code editor and type safety for more stable developement. For the reason that this app is available on the Internet, I have integrated **Okta** to secure digital interactions and limit access to the app. The application makes use of **SSL** to secure transferred data.
