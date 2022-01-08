@@ -1,4 +1,4 @@
-# Clinical reporting application (frontend part)
+# Medical reporting application (frontend part)
 [Deutsch](./README_DE.md)
 
 See the description of the backend part here: [Link](https://github.com/Donatell/report-backend)
